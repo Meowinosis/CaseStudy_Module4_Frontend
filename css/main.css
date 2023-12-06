@@ -1206,16 +1206,18 @@ h1, h2, h3, h4, h5, h6 {
 /* banner area css
 ============================================================================================ */
 .banner-area {
-  background: url(../img/banner/banner-bg.jpg) center no-repeat;
+  background-color: #f8eded;
   background-size: cover;
   position: relative; }
   @media (max-width: 768px) {
     .banner-area .fullscreen {
-      height: 650px !important; } }
+      height: 600px !important; } }
   .banner-area .active-banner-slider .owl-nav {
     position: absolute;
     right: 0;
-    bottom: -200px; }
+    bottom: -60px;
+    background-color: black;
+  }
     @media (max-width: 1920px) {
       .banner-area .active-banner-slider .owl-nav {
         right: -115px; } }
@@ -1227,6 +1229,7 @@ h1, h2, h3, h4, h5, h6 {
         display: none; } }
     .banner-area .active-banner-slider .owl-nav .owl-prev,
     .banner-area .active-banner-slider .owl-nav .owl-next {
+      color: black;
       display: inline-block;
       margin: 10px;
       opacity: .5;
@@ -1249,7 +1252,7 @@ h1, h2, h3, h4, h5, h6 {
       margin-bottom: 30px; }
       @media (max-width: 767px) {
         .banner-area .banner-content h1 {
-          font-size: 35px;
+          font-size: 25px;
           line-height: 46px; } }
     .banner-area .banner-content p {
       margin: 0; }
@@ -1505,7 +1508,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .single-product {
   margin-bottom: 50px; }
-  .single-product img {
+  .single-product div img {
     margin-bottom: 20px;
     width: 100%; }
   .single-product .product-details h6 {
@@ -5790,5 +5793,31 @@ label {
   .footer-text a,
   .footer-text i {
     color: #ffba00; }
+.main-admin {
+  justify-content: center;
+  display: flex;
+}
+.main-admin > table {
+  width: 80%;
+}
+.main-admin > table,th,td {
+  text-align: center;
 
+}
+.form-create {
+  color: black;
+  display: flex;
+  flex-direction: column;
+}
+.form-create > label {
+  color: #0056b3;
+}
+.form-create > input {
+  margin-bottom: 8px;
+  height: 36px;
+}
+#category {
+  height: 30px;
+  width: 200px;
+}
 /*# sourceMappingURL=main.css.map */
