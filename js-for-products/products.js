@@ -11,9 +11,15 @@ function showAllProduct() {
 
         <div class="sidebar-categories">
           <div class="head">Browse Categories</div>
+          
           <ul class="main-categories">
-            <li class="main-nav-list"><a data-toggle="collapse" href="#fruitsVegetable" aria-expanded="false" aria-controls="fruitsVegetable"><span
-                 class="lnr lnr-arrow-right"></span>Fruits and Vegetables<span class="number">(53)</span></a>
+            <li class="main-nav-list">
+            <a data-toggle="collapse" href="#fruitsVegetable" aria-expanded="false" aria-controls="fruitsVegetable">
+            <span
+                 class="lnr lnr-arrow-right">
+                 
+            </span>Fruits and Vegetables
+            <span class="number">(53)</span></a>
             </li>
 
             <li class="main-nav-list"><a data-toggle="collapse" href="#meatFish" aria-expanded="false" aria-controls="meatFish"><span
@@ -89,7 +95,10 @@ function showAllProduct() {
                 html += `
                  <div class="col-lg-4 col-md-6">
               <div class="single-product">
-                <img class="img-fluid" src="#dfsdf" alt="">Image
+                IMage
+                <div id="product_${products[i].id}">
+              
+                </div>
                 <div class="product-details">
                   <h6>${products[i].name}
                     </h6>
@@ -120,6 +129,7 @@ function showAllProduct() {
               </div>
                 </div>       
             `;
+                getOneImage(products[i].id)
             }
                 html +=
                     `
@@ -153,4 +163,8 @@ function showAllProduct() {
      document.getElementById("main").innerHTML = html;
         })
 }
-showAllProduct();
+// showAllProduct();
+
+
+
+
