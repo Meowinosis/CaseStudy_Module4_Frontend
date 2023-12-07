@@ -1,9 +1,35 @@
-function showAllProduct() {
-    axios.get('http://localhost:8080/products')
+async function showAllCategoryForUserPage(){
+    axios.get('http://localhost:8080/categories')
+        .then(function (response) {
+                let listCate = response.data;
 
-        .then(async function (response) {
-            let products = response.data;
-            let html = `
+                let html = ``;
+                for (let i = 0; i < listCate.length; i++) {
+
+                    html += `
+             <li class="main-nav-list" style="cursor: pointer">
+            <a data-toggle="collapse" onclick="searchByCateForUser(${listCate[i].id})" aria-expanded="false" aria-controls="fruitsVegetable">
+            <span
+                 class="lnr lnr-arrow-right"> 
+                 <input type="hidden" value="${listCate[i].id}" class="categories_user">               
+            </span>${listCate[i].name}
+            <span class="number">(53)</span></a>
+            </li>
+`
+                }
+                document.getElementById("main_categories").innerHTML = html;
+            }
+        )
+
+}
+
+function searchByCateForUser(id){
+        axios.post('http://localhost:8080/products/searchByCategory',[id])
+
+
+            .then(async function (response) {
+                let products = response.data;
+                let html = `
 
     <div class="container">
     <div class="row">
@@ -80,8 +106,8 @@ function showAllProduct() {
           <div class="row"
           >
 `
-            for (let i = 0; i < products.length; i++) {
-                html += `
+                for (let i = 0; i < products.length; i++) {
+                    html += `
                  <div class="col-lg-4 col-md-6">
               <div class="single-product">
                 IMage
@@ -118,10 +144,10 @@ function showAllProduct() {
               </div>
                 </div>       
             `;
-                getOneImage(products[i].id)
-            }
-            html +=
-                `
+                    getOneImage(products[i].id)
+                }
+                html +=
+                    `
          </div> 
         </section>
         <!-- End Best Seller -->
@@ -149,12 +175,10 @@ function showAllProduct() {
     </div>
   </div>
     `;
-            await showAllCategoryForUserPage();
-            document.getElementById("main").innerHTML = html;
-        })
+                await showAllCategoryForUserPage();
+                document.getElementById("main").innerHTML = html;
+            })
+
+
+
 }
-showAllProduct();
-
-
-
-

@@ -5820,4 +5820,12 @@ label {
   height: 30px;
   width: 200px;
 }
+#searchCategory {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  text-align: center;
+  align-items: center;
+}
 /*# sourceMappingURL=main.css.map */
