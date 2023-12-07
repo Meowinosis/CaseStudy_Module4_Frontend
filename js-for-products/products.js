@@ -1,9 +1,9 @@
 function showAllProduct() {
-    axios.get('http://localhost:8080/products')
+  axios.get('http://localhost:8080/products')
 
-        .then(function (response) {
-            let products = response.data;
-            let html = `
+    .then(function (response) {
+      let products = response.data;
+      let html = `
 
     <div class="container">
     <div class="row">
@@ -11,9 +11,15 @@ function showAllProduct() {
 
         <div class="sidebar-categories">
           <div class="head">Browse Categories</div>
+          
           <ul class="main-categories">
-            <li class="main-nav-list"><a data-toggle="collapse" href="#fruitsVegetable" aria-expanded="false" aria-controls="fruitsVegetable"><span
-                 class="lnr lnr-arrow-right"></span>Fruits and Vegetables<span class="number">(53)</span></a>
+            <li class="main-nav-list">
+            <a data-toggle="collapse" href="#fruitsVegetable" aria-expanded="false" aria-controls="fruitsVegetable">
+            <span
+                 class="lnr lnr-arrow-right">
+                 
+            </span>Fruits and Vegetables
+            <span class="number">(53)</span></a>
             </li>
 
             <li class="main-nav-list"><a data-toggle="collapse" href="#meatFish" aria-expanded="false" aria-controls="meatFish"><span
@@ -84,22 +90,26 @@ function showAllProduct() {
         <section class="lattest-product-area pb-40 category-list">
           <div class="row"
           >
-`
-            for (let i = 0; i < products.length; i++) {
-                html += `
+`;
+      for (let i = 0; i < products.length; i++) {
+        html += `
                  <div class="col-lg-4 col-md-6">
               <div class="single-product">
-                <img class="img-fluid" src="#dfsdf" alt="">Image
+                IMage
+                <div id="product_${products[i].id}">
+              
+                </div>
                 <div class="product-details">
+                  <input type="hidden" value="${products[i].id}" />
                   <h6>${products[i].name}
                     </h6>
                   <div class="price">
-                    <h6>${products[i].price}</h6>
+                    <h6>$${products[i].price}</h6>
                     <h6 class="l-through">$210.00</h6>
                   </div>
                   <div class="prd-bottom">
 
-                    <a href="" class="social-info">
+                    <a href="javascript:" onclick="addToCart(${products[i].id})" class="social-info">
                       <span class="ti-bag"></span>
                       <p class="hover-text">add to bag</p>
                     </a>
@@ -120,6 +130,7 @@ function showAllProduct() {
               </div>
                 </div>       
             `;
+                getOneImage(products[i].id)
             }
                 html +=
                     `
@@ -150,7 +161,35 @@ function showAllProduct() {
     </div>
   </div>
     `;
-     document.getElementById("main").innerHTML = html;
-        })
+      document.getElementById("main").innerHTML = html;
+    });
 }
 showAllProduct();
+
+
+function addToCart(id) {
+  // if (getCurrentUser()) {
+    let existingList = sessionStorage.getItem('cart-list');
+    let updatedList = existingList ? JSON.parse(existingList) : [];
+    var productIdToCheck = id;
+    var existingProductIndex = updatedList.findIndex(function (item) {
+      return item.id === productIdToCheck;
+    });
+    if (existingProductIndex === -1) {
+      let newItem = { id: id, quantity: 1 };
+      updatedList.push(newItem);
+    }
+    else {
+      updatedList[existingProductIndex].quantity += 1;
+    }
+    sessionStorage.setItem('cart-list', JSON.stringify(updatedList));
+  // }
+  // else {
+  //   alert("chua dang nhap");
+  // }
+}
+
+function getCurrentUser(){
+  return JSON.parse(localStorage.getItem("current-user"));
+}
+
