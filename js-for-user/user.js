@@ -98,9 +98,21 @@ function login() {
     }
     axios.post("http://localhost:8080/login", user).then(res => {
         localStorage.setItem("currentUser", JSON.stringify(res.data));
-        showNavbarUser();
+        let roles= res.data.roles;
+        const isAdmin = function () {
+            for (let i=0;i<roles.length;i++) {
+                if (roles[i].authority==="ROLE_ADMIN")
+                    return true
+            }
+            return false;
+        }
+        if(isAdmin()){
+            showPageForAdmin()
+        }else {
+            showPageUser();
+        }
         $("#form-Login").modal("hide");
-        showCustomerInfo()
+        showNavbarUser();
     }).catch(err => {
         document.getElementById("msg").innerHTML = "Sai Tài Khoản hoặc mật khẩu"
     })
@@ -142,6 +154,7 @@ function getCurrentUser() {
 
 function logout() {
     localStorage.clear();
+    showPageUser();
     showNavbarUser()
 }
 
@@ -164,26 +177,14 @@ if (getCurrentUser()) {
 }
 
 function showCustomerInfo() {
-    axios.get("http://localhost:8080/customers/" + getCurrentUser().id, {headers: {"Authorization": `Bearer ${getCurrentUser().accessToken}`}})
+    let user= getCurrentUser();
+    console.log(user)
+    axios.get("http://localhost:8080/customers/" + user.id, {headers: {"Authorization": `Bearer ${getCurrentUser().accessToken}`}})
         .then(response => {
             let customer = response.data;
             let html = "";
             document.getElementById("main").innerHTML =
                 `
-                <section class="banner-area organic-breadcrumb">
-                    <div class="container">
-                        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
-                            <div class="col-first">
-                                <h1>Customer Details</h1>
-                                <nav class="d-flex align-items-center">
-                                    <a href="javascript:">Home<span class="lnr lnr-arrow-right"></span></a>
-                                    <a href="javascript:">Customer Details</a>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <!-- End Banner Area -->
                 <!--================Customer Box Area =================-->
                 <section class="login_box_area section_gap">
                     <div class="container customer-info">
@@ -364,7 +365,7 @@ function showNavbarUser() {
         }
         html =
             `
-                        <li class="nav-item"><a href="javascript:" class="cart nav-link"><span
+                        <li class="nav-item"><a href="javascript:" onclick="showCart()" class="cart nav-link"><span
                                 class="ti-bag"></span></a></li>
                         <li class="nav-item submenu dropdown">
                             <a href="#" class="nav-link dropdown-toggle user" data-toggle="dropdown" role="button"
@@ -373,7 +374,7 @@ function showNavbarUser() {
                             <ul class="dropdown-menu user-menu" style="top:100%">
                               `;
         if (isAdmin()) {
-            html += `            <li class="nav-item"><a class="nav-link" onclick="" href="javascript:">Product Management</a></li>`
+            html += `            <li class="nav-item"><a class="nav-link" onclick="showPageForAdmin()" href="javascript:">Product Management</a></li>`
         }else {
             html+=`<li class="nav-item"><a class="nav-link" onclick="showCustomerInfo()"
                                                         href="javascript:">Profile</a></li>`

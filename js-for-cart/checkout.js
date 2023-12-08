@@ -4,7 +4,7 @@ function showCheckout(){
     let productIdList = productList.map(function (item) {
         return item.id;
     });
-    axios.post('http://localhost:8080/order/checkout', productIdList)
+    axios.post('http://localhost:8080/order/checkout', productIdList,{headers: {"Authorization": `Bearer ${getCurrentUser().accessToken}`}})
         .then(function (response) {
             let html = ``;
             let products = response.data;   
@@ -71,10 +71,11 @@ function confirmation(){
     let data = JSON.parse(sessionStorage.getItem("cart-list"));
     let request ={
         data: data,
-        total: total
+        total: total,
+        userId: getCurrentUser().id
     }
-    axios.post('http://localhost:8080/order/create', request)
+    axios.post('http://localhost:8080/order/create', request,{headers: {"Authorization": `Bearer ${getCurrentUser().accessToken}`}})
     .then((function (){
-        showAllProduct();
+        showPageUser();
     }));
 }

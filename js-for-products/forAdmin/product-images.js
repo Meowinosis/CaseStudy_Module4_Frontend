@@ -22,7 +22,7 @@ function getOneImage(idProduct){
 
 function showFormUpdateImage(idProduct){
     let image = ``;
-    return axios.get('http://localhost:8080/product_images/search/' + idProduct)
+    return axios.get('http://localhost:8080/product_images/search/' + idProduct,{headers: {"Authorization": `Bearer ${getCurrentUser().accessToken}`}})
         .then(function (response) {
             let images = response.data;
             image += `
@@ -71,7 +71,7 @@ function showFormUpdateImage(idProduct){
 function removeImage(imageId){
     let isConfirm = confirm("Are you sure to delete this image")
     if (isConfirm){
-        axios.delete('http://localhost:8080/product_images/delete/' + imageId )
+        axios.delete('http://localhost:8080/product_images/delete/' + imageId,{headers: {"Authorization": `Bearer ${getCurrentUser().accessToken}`}} )
             .then(function (){
                 alert("Delete complete")
                 showPageForAdmin();
@@ -97,7 +97,7 @@ function addImage(id){
             id : id
         }
     }
-    axios.post('http://localhost:8080/product_images/create', product_image)
+    axios.post('http://localhost:8080/product_images/create', product_image,{headers: {"Authorization": `Bearer ${getCurrentUser().accessToken}`}})
         .then(function (response){
             alert("Add complete")
             showPageForAdmin();

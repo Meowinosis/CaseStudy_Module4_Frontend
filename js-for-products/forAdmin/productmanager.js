@@ -74,7 +74,7 @@ function showPageForAdmin() {
 function removeProduct(id){
     let isConfirm = confirm("Are you sure to delete this product??");
     if (isConfirm){
-        axios.delete('http://localhost:8080/products/delete/' + id )
+        axios.delete('http://localhost:8080/products/delete/' + id,{headers: {"Authorization": `Bearer ${getCurrentUser().accessToken}`}} )
             .then(function () {
                 alert("Delete Complete")
                 showPageForAdmin();

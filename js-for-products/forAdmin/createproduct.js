@@ -64,7 +64,7 @@ function create(){
         manufacture : manufacture,
         description : description
     } ;
-    axios.post('http://localhost:8080/products/create', product)
+    axios.post('http://localhost:8080/products/create', product,{headers: {"Authorization": `Bearer ${getCurrentUser().accessToken}`}})
         .then(function (response) {
             let productId = response.data.id;
             let product_images = {
@@ -73,7 +73,7 @@ function create(){
                     id: productId
                 }
             }
-            axios.post('http://localhost:8080/product_images/create', product_images)
+            axios.post('http://localhost:8080/product_images/create', product_images,{headers: {"Authorization": `Bearer ${getCurrentUser().accessToken}`}})
                 .then(function (response){
                     showPageForAdmin();
                 })
@@ -81,46 +81,9 @@ function create(){
         })
 }
 
-// function uploadImage(e) {
-//     let fbBucketName = 'images';
-//     let uploader = document.getElementById('uploader');
-//     let file = e.target.files;
-//     let storageRef;
-//     let uploadTask;
-//     for (let i = 0; i < file.length; i++) {
-//         storageRef = firebase.storage().ref(`${fbBucketName}/${file[i].name}`);
-//         uploadTask = storageRef.put(file[i]);
-//     }
-//
-//     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-//         function (snapshot) {
-//             uploader.value = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-//             switch (snapshot.state) {
-//                 case firebase.storage.TaskState.PAUSED:
-//                     break;
-//                 case firebase.storage.TaskState.RUNNING:
-//                     break;
-//             }
-//         }, function (error) {
-//             switch (error.code) {
-//                 case 'storage/unauthorized':
-//                     break;
-//                 case 'storage/canceled':
-//                     break;
-//                 case 'storage/unknown':
-//                     break;
-//             }
-//         }, function () {
-//             let downloadURL = uploadTask.snapshot.downloadURL;
-//             console.log(downloadURL)
-//             document.getElementById('imgDiv').innerHTML = `<img src="${downloadURL}" alt="" style="width: 100%;height: 100%">`
-//             document.getElementById("image").value = downloadURL;
-//         });
-// }
-
 
 function getFormUpdateProduct(id,categoryId){
-    axios.get('http://localhost:8080/products/search/' + id)
+    axios.get('http://localhost:8080/products/search/' + id,{headers: {"Authorization": `Bearer ${getCurrentUser().accessToken}`}})
         .then(async function (response){
             let product = response.data;
             document.getElementById("showModal").innerHTML = `
@@ -189,7 +152,7 @@ function update(id){
         manufacture : manufacture,
         description : description
     } ;
-    axios.put('http://localhost:8080/products/update/' +id , product)
+    axios.put('http://localhost:8080/products/update/' +id , product,{headers: {"Authorization": `Bearer ${getCurrentUser().accessToken}`}})
         .then(function (response) {
             showPageForAdmin();
             $("#modal-create").modal("hide");
