@@ -1138,10 +1138,10 @@ h1, h2, h3, h4, h5, h6 {
         .header_area .navbar .nav.navbar-nav.navbar-right li {
           margin-left: 0px; } }
       .header_area .navbar .nav.navbar-nav.navbar-right li:first-child {
-        margin-left: 35px; }
+        margin-left: 0; }
         @media (max-width: 991px) {
           .header_area .navbar .nav.navbar-nav.navbar-right li:first-child {
-            display: none; } }
+           } }
       .header_area .navbar .nav.navbar-nav.navbar-right li span {
         color: #222222;
         line-height: 80px;
