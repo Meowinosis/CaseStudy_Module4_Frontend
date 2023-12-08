@@ -116,9 +116,9 @@ function addToCart(id) {
     // }
 }
 
-function getCurrentUser(){
-    return JSON.parse(localStorage.getItem("current-user"));
-}
+// function getCurrentUser(){
+//     return JSON.parse(localStorage.getItem("current-user"));
+// }
 
 async function showAllCategoryForUserPage(){
     axios.get('http://localhost:8080/categories')

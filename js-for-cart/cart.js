@@ -50,7 +50,7 @@ function showCart() {
         return item.id;
     });
     console.log(productIdList);
-    axios.post('http://localhost:8080/cart', productIdList)
+    axios.post('http://localhost:8080/cart', productIdList,{headers: {"Authorization": `Bearer ${getCurrentUser().accessToken}`}})
         .then(function (response) {
             let html = ``;
             let products = response.data;   
@@ -81,12 +81,13 @@ function showCart() {
                         <tbody>
         `;
             for (let i = 0; i < matchedProducts.length; i++) {
+
                 html += `                            
             <tr>
             <td>
                 <div class="media">
-                    <div class="d-flex">
-                        <img src="img/cart.jpg" alt="">
+                    <div class="d-flex" id="product_${matchedProducts[i].id}">
+                        
                     </div>
                     <div class="media-body">
                         <p>${matchedProducts[i].name}</p>
@@ -110,8 +111,7 @@ function showCart() {
                 <h5 id="totalPrice_${matchedProducts[i].id}">$${calculateTotalPrice(matchedProducts[i].quantityInCart, matchedProducts[i].price)}</h5>
             </td>
         </tr>`;
-
-                ;
+                getOneImage(matchedProducts[i].id)
             }
             html += `                            
             <tr>
