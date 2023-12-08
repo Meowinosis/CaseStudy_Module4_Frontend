@@ -141,7 +141,7 @@ function showCart() {
             <td>
                 <div class="checkout_btn_inner d-flex align-items-center">
                     <a class="gray_btn" href="#">Continue Shopping</a>
-                    <a class="primary-btn" href="#">Proceed to checkout</a>
+                    <a class="primary-btn" href="javascript:" onclick="showCheckout()">Proceed to checkout</a>
                 </div>
             </td>
         </tr>
@@ -211,7 +211,6 @@ function calculateCartSubtotal() {
             subtotal += totalPrice;
         }
     });
-
     return subtotal;
 }
 
@@ -223,6 +222,7 @@ function updateSubtotal() {
     if (subtotalElement) {
         subtotalElement.textContent = '$' + subtotal.toFixed(2);
     }
+    sessionStorage.setItem("total", subtotal);
 }
 
 function updateQuantityInSession(productId, newQuantity) {
