@@ -1,14 +1,14 @@
 async function showFormCreate(){
     document.getElementById("showModal").innerHTML = `
-<div class="modal fade" tabindex="-1" role="dialog" id="modal-create">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header" style="padding: 10px">
-        <h5 class="modal-title" style=" margin-left: 180px;">FORM CREATE</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+        <div class="modal fade" tabindex="-1" role="dialog" id="modal-create">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header" style="padding: 10px">
+                <h5 class="modal-title" style=" margin-left: 180px;">FORM CREATE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
       <div class="modal-body">
 
 
@@ -42,7 +42,7 @@ async function showFormCreate(){
 </div>
     `
         $("#modal-create").modal("show");
-    $("#modal-create").modal("close");
+
 }
 
 function create(){
@@ -143,8 +143,6 @@ function getFormUpdateProduct(id,categoryId){
        <div class="row" style="padding: 12px 0">
        
        <div class="col-8">
-        <label for="fileButton" style="color: indianred">Image : </label><input type="file" multiple="multiple" id="fileButton" onchange="uploadImage(event)">
-        <input type="hidden" id="image" value="">
         <div style="margin-top: 8px"><label for="category" style="color: indianred">Category : </label><select name="category" id="category">${await getAllCategory()}</select>
         
         </div>
@@ -177,7 +175,6 @@ function update(id){
     let name = document.getElementById("name").value;
     let  price = document.getElementById("price").value;
     let  quantity = document.getElementById("quantity").value;
-    let  image = document.getElementById("image").value;
     let  categoryId = document.getElementById("category").value;
     let  manufacture = document.getElementById("manufacture").value;
     let  description = document.getElementById("description").value;
@@ -194,19 +191,8 @@ function update(id){
     } ;
     axios.put('http://localhost:8080/products/update/' +id , product)
         .then(function (response) {
-
-            let product_images = {
-                image : image,
-                product : {
-                    id: id
-                }
-            }
-            axios.post('http://localhost:8080/product_images/create', product_images)
-                .then(function (response){
-                    showPageForAdmin();
-                })
+            showPageForAdmin();
             $("#modal-create").modal("hide");
-
         })
 }
 
